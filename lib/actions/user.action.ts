@@ -1,6 +1,8 @@
 "use server";
 
+import Question from "@/database/question.model";
 import User from "@/database/user.model";
+import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../mongoose";
 import {
   CreateUserParams,
@@ -8,8 +10,6 @@ import {
   GetUserByIdParams,
   UpdateUserParams,
 } from "./share.types";
-import { revalidatePath } from "next/cache";
-import Question from "@/database/question.model";
 
 export async function getUserById(params: GetUserByIdParams) {
   try {
@@ -45,9 +45,9 @@ export async function updateUser(params: UpdateUserParams) {
 
     const { clerkId, updateData, path } = params;
 
-     await User.findOneAndUpdate({ clerkId }, updateData, {
-       new: true,
-     });
+    await User.findOneAndUpdate({ clerkId }, updateData, {
+      new: true,
+    });
 
     revalidatePath(path);
   } catch (error) {
@@ -75,11 +75,13 @@ export async function deleteUser(params: DeleteUserParams) {
     // );
 
     // delete question from database
+    // @ts-ignore
     await Question.deleteMany({ author: user._id });
 
     // TODO: delete answer, answer from database
 
-    const deletedUser = await user.findByIdAndDelete(user._id);
+    // @ts-ignore
+    const deletedUser = await User.findByIdAndDelete(user._id);
     return deletedUser;
 
     // finish delete user from database
