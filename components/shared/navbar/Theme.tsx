@@ -1,19 +1,16 @@
 "use client";
 
 import { useTheme } from "@/context/ThemeProvider";
-import React from "react";
 
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
+  MenubarTrigger
 } from "@/components/ui/menubar";
-import Image from "next/image";
 import { themes } from "@/constant";
+import Image from "next/image";
 
 const Theme = () => {
   const { mode, setMode } = useTheme();
