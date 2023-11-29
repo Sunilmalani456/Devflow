@@ -1,9 +1,22 @@
 /* eslint-disable no-unused-vars */
 "use server";
 
-import { GetTopInteractedTagsParams } from "./share.types";
+import { GetAllTagsParams, GetTopInteractedTagsParams } from "./share.types";
 import { connectToDatabase } from "../mongoose";
 import User from "@/database/user.model";
+import Tag from "@/database/tag.model";
+
+export async function getAllTag(params: GetAllTagsParams) {
+  try {
+    connectToDatabase();
+
+    const tags = await Tag.find({});
+
+    return { tags };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
@@ -25,3 +38,5 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
     console.log(error);
   }
 }
+
+
