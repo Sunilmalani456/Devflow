@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import React, { useRef, useState } from "react";
 
 import {
   Form,
@@ -12,30 +12,35 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
 
+import { useTheme } from "@/context/ThemeProvider";
+import { createQuestion } from "@/lib/actions/question.action";
+import { questionsSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { questionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
-import Image from "next/image";
-import { createQuestion } from "@/lib/actions/question.action";
-import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   mongoUserId: string;
 }
 //
+// ---COMPONENT---
+
 const Question = ({ mongoUserId }: Props) => {
   //
   // ---HOOKS---
+  const { mode } = useTheme();
   const router = useRouter();
   const pathName = usePathname();
   const editorRef = useRef(null);
   const type: any = "create";
   const [IsSubmitting, setIsSubmitting] = useState(false);
+
 
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -109,7 +114,7 @@ const Question = ({ mongoUserId }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-10"
+        className="flex w-full flex-col gap-10"
       >
         {/* FOR SPACING :) */}
 
@@ -118,7 +123,7 @@ const Question = ({ mongoUserId }: Props) => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full">
+            <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Question Title <span className="text-primary-500">*</span>
               </FormLabel>
@@ -142,7 +147,7 @@ const Question = ({ mongoUserId }: Props) => {
           control={form.control}
           name="explanation"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full gap-3">
+            <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Deatialed explaination of your problem{" "}
                 <span className="text-primary-500">*</span>
@@ -182,6 +187,8 @@ const Question = ({ mongoUserId }: Props) => {
                       "codesample | bold italic forecolor | alignleft aligncenter |" +
                       "alignright alignjustify | bullist numlist",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
@@ -199,7 +206,7 @@ const Question = ({ mongoUserId }: Props) => {
           control={form.control}
           name="tags"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full">
+            <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
@@ -235,7 +242,7 @@ const Question = ({ mongoUserId }: Props) => {
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Add upto 3 tags to describe what youe question is about. You
                 need to press{" "}
-                <span className="text-primary-500 font-medium">ENTER KEY</span>{" "}
+                <span className="font-medium text-primary-500">ENTER KEY</span>{" "}
                 to add tag.
               </FormDescription>
               <FormMessage className="text-red-500" />

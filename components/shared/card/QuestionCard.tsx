@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Link from "next/link";
 import Metric from "../Metric";
@@ -31,6 +32,15 @@ const QuestionCard = ({
   answer,
   createAt,
 }: Props) => {
+  const Dot = (
+    <span className="text-dark400_light700 relative">
+      <span className="text-dark400_light700 absolute left-0 top-[-0.3] font-extrabold">
+        .
+      </span>
+      <span className="ml-2">{`asked ${getTimestamp(createAt)}`}</span>
+    </span>
+  );
+
   return (
     <div className="card-wrapper rounded-[10px] p-9 shadow-lg sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -56,10 +66,11 @@ const QuestionCard = ({
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <div>
           <Metric
-            imgUrl="/assets/icons/avatar.svg"
+            imgUrl={author.picture}
             alt="user"
             value={author.name}
-            title={`asked ${getTimestamp(createAt)}`}
+            // @ts-ignore
+            title={Dot}
             href={`/profile/${author._id}`}
             isAuthor
             textStyles="body-medium text-dark400_light700"
