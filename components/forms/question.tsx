@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -23,6 +22,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
 interface Props {
   mongoUserId: string;
@@ -31,6 +31,7 @@ interface Props {
 const Question = ({ mongoUserId }: Props) => {
   //
   // ---HOOKS---
+  const { mode } = useTheme();
   const router = useRouter();
   const pathName = usePathname();
   const editorRef = useRef(null);
@@ -109,7 +110,7 @@ const Question = ({ mongoUserId }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-10"
+        className="flex w-full flex-col gap-10"
       >
         {/* FOR SPACING :) */}
 
@@ -118,7 +119,7 @@ const Question = ({ mongoUserId }: Props) => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full">
+            <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Question Title <span className="text-primary-500">*</span>
               </FormLabel>
@@ -142,7 +143,7 @@ const Question = ({ mongoUserId }: Props) => {
           control={form.control}
           name="explanation"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full gap-3">
+            <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Deatialed explaination of your problem{" "}
                 <span className="text-primary-500">*</span>
@@ -181,6 +182,8 @@ const Question = ({ mongoUserId }: Props) => {
                       "undo redo | " +
                       "codesample | bold italic forecolor | alignleft aligncenter |" +
                       "alignright alignjustify | bullist numlist",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                     content_style: "body { font-family:Inter; font-size:16px }",
                   }}
                 />
@@ -199,7 +202,7 @@ const Question = ({ mongoUserId }: Props) => {
           control={form.control}
           name="tags"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full">
+            <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
@@ -235,7 +238,7 @@ const Question = ({ mongoUserId }: Props) => {
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Add upto 3 tags to describe what youe question is about. You
                 need to press{" "}
-                <span className="text-primary-500 font-medium">ENTER KEY</span>{" "}
+                <span className="font-medium text-primary-500">ENTER KEY</span>{" "}
                 to add tag.
               </FormDescription>
               <FormMessage className="text-red-500" />

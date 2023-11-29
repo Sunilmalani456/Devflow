@@ -15,9 +15,15 @@ interface Props {
   }[];
   otherClasses?: string;
   containerClasses?: string;
+  placeholder?: string;
 }
 
-const Filters = ({ filter, otherClasses, containerClasses }: Props) => {
+const Filters = ({
+  filter,
+  placeholder = "Search a Filter",
+  otherClasses,
+  containerClasses,
+}: Props) => {
   return (
     <div className={`relative ${containerClasses}`}>
       <Select>
@@ -25,7 +31,7 @@ const Filters = ({ filter, otherClasses, containerClasses }: Props) => {
           className={`${otherClasses} body-regular light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5`}
         >
           <div className="line-clamp-1 flex-1 text-left">
-            <SelectValue placeholder="Select a Filter" />
+            <SelectValue placeholder={placeholder} />
           </div>
         </SelectTrigger>
         <SelectContent>
@@ -34,7 +40,7 @@ const Filters = ({ filter, otherClasses, containerClasses }: Props) => {
               <SelectItem
                 key={item.name}
                 value={item.value}
-                className="focus:bg-light-800 dark:focus:bg-dark-400 cursor-pointer"
+                className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400"
               >
                 {item.name}
               </SelectItem>

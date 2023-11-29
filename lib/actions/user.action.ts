@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 "use server";
 
 import Question from "@/database/question.model";
@@ -7,9 +8,26 @@ import { connectToDatabase } from "../mongoose";
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   GetUserByIdParams,
   UpdateUserParams,
 } from "./share.types";
+
+export async function getAllUsers(params: GetAllUsersParams) {
+  try {
+    connectToDatabase();
+
+    // const { page = 1, filter, pageSize = 20, searchQuery } = params;
+
+    // @ts-ignore
+    const users = await User.find({}).sort({ createdAt: -1 });
+
+    return { users };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function getUserById(params: GetUserByIdParams) {
   try {
