@@ -1,5 +1,4 @@
 import React from "react";
-
 import { ClerkProvider } from "@clerk/nextjs";
 
 // eslint-disable-next-line camelcase
@@ -10,6 +9,7 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 
 import "./globals.css";
+import "../styles/prism.css";
 
 const inter = Inter({
   subsets: ["latin"],

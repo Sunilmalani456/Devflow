@@ -2,6 +2,7 @@ import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Link from "next/link";
 import Metric from "../Metric";
 import RenderTag from "../RenderTag";
+import Image from "next/image";
 
 interface Props {
   _id: string;
@@ -16,9 +17,10 @@ interface Props {
     picture: string;
   };
   views: number;
-  upvote: number;
+  upvote: string[];
   answer: Array<object>;
   createAt: Date;
+  type?: string;
 }
 
 const QuestionCard = ({
@@ -30,6 +32,7 @@ const QuestionCard = ({
   views,
   answer,
   createAt,
+  type,
 }: Props) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 shadow-lg sm:px-11">
@@ -45,6 +48,16 @@ const QuestionCard = ({
           </Link>
         </div>
         {/* if signed in add edit delete actions */}
+        {type === "Collection" && (
+          <Image
+            src="/assets/icons/star-filled.svg"
+            alt="star"
+            width={18}
+            height={18}
+            className="cursor-pointer"
+            // onClick={handleSave}
+          />
+        )}
       </div>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
@@ -56,10 +69,10 @@ const QuestionCard = ({
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <div>
           <Metric
-            imgUrl="/assets/icons/avatar.svg"
+            imgUrl={author.picture}
             alt="user"
             value={author.name}
-            title={`asked ${getTimestamp(createAt)}`}
+            title={`--asked ${getTimestamp(createAt)}`}
             href={`/profile/${author._id}`}
             isAuthor
             textStyles="body-medium text-dark400_light700"
@@ -69,7 +82,7 @@ const QuestionCard = ({
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
-            value={formatAndDivideNumber(upvote)}
+            value={formatAndDivideNumber(upvote.length)}
             title="Votes"
             textStyles="small-medium text-dark400_light800"
           />

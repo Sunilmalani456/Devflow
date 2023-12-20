@@ -177,11 +177,12 @@ const Question = ({ mongoUserId }: Props) => {
                       "insertdatetime",
                       "media",
                       "table",
+                      "wordcount",
                     ],
                     toolbar:
                       "undo redo | " +
                       "codesample | bold italic forecolor | alignleft aligncenter |" +
-                      "alignright alignjustify | bullist numlist",
+                      "alignright alignjustify | bullist numlist outdent indent",
                     skin: mode === "dark" ? "oxide-dark" : "oxide",
                     content_css: mode === "dark" ? "dark" : "light",
                     content_style: "body { font-family:Inter; font-size:16px }",
