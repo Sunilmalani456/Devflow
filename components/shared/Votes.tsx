@@ -10,7 +10,9 @@ import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import path from "path";
+
+import { viewQuestion } from "@/lib/actions/interaction.action";
+import { useEffect } from "react";
 
 interface Props {
   type: string;
@@ -33,8 +35,11 @@ const Votes = ({
   hasDownVoted,
   hasSaved,
 }: Props) => {
+  // Path Hooks
   const pathname = usePathname();
   const router = useRouter();
+
+  // HANDLE VOTE
   const handleVote = async (action: string) => {
     if (!userId) return;
 
@@ -80,6 +85,8 @@ const Votes = ({
     }
     // TODO: add a toast notification
   };
+
+  // HANDLE SAVE
   const handleSave = async () => {
     await toggleSaveQuestion({
       questionId: itemId,
@@ -87,6 +94,14 @@ const Votes = ({
       path: pathname,
     });
   };
+
+  // UseEffect Hook
+  useEffect(() => {
+    viewQuestion({
+      questionId: itemId,
+      userId: userId || undefined,
+    });
+  }, [itemId, userId, pathname, router]);
 
   return (
     <div className="flex gap-5">

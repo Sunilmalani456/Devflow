@@ -55,12 +55,10 @@ const Page = async () => {
             ))
           ) : (
             <NoResult
-              title="There are no saved question to show"
-              description=" Be the first to break the silence! 🚀 Ask a Question and kickstart the
-        discussion. our query could be the next big thing others learn from. Get
-       involved! 💡"
-              link="ask-question"
-              linkTitle="Ask a Question"
+              title="No Saved Questions Found"
+              description="It appears that there are no saved questions in your collection at the moment 😔.Start exploring and saving questions that pique your interest 🌟"
+              link="/"
+              linkTitle="Explore Questions"
             />
           )
         }
