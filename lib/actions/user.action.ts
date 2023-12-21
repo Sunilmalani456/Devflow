@@ -2,6 +2,7 @@
 "use server";
 import { FilterQuery } from "mongoose";
 import Question from "@/database/question.model";
+import Answer from "@/database/answer.model";
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
@@ -185,5 +186,25 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    connectToDatabase();
+    const { userId } = params;
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // get total questions and answers
+    const totalQuestions = await Question.countDocuments({ author: user._id });
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+
+    return { user, totalQuestions, totalAnswers };
+  } catch (error) {
+    console.log(error);
   }
 }

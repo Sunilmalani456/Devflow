@@ -1,8 +1,8 @@
 import { Schema, models, model, Document } from "mongoose";
 
 export interface IAnswer extends Document {
-  author: Schema.Types.ObjectId; // reference to user id in User model
-  question: Schema.Types.ObjectId;
+  author: Schema.Types.ObjectId; // reference to userId in User model
+  question: Schema.Types.ObjectId; 
   content: string;
   upvotes: Schema.Types.ObjectId[]; // array of user ids ["user1", "user2"]
   downvotes: Schema.Types.ObjectId[];

@@ -43,7 +43,10 @@ const Tags = async () => {
                     </p>
                   </div>
                   <p className="small-medium text-dark300_light900 mt-3.5">
-                    {tag.describtion}
+                    The DevOverflow website is a great resource for asking and
+                    answering questions on a wide range of programming topics.
+                    It is a community of developers who are passionate about
+                    programming and want to help others.
                   </p>
                   <p
                     className="small-medium text-dark400_light500 mt-3.5
@@ -60,7 +63,7 @@ const Tags = async () => {
           ) : (
             <NoResult
               title="No Tags Yet ..."
-              description="There is no tags yet, you can create one."
+              description="There is no tags yet, you can create one. 🚀"
               link="/ask-question"
               linkTitle="Ask Question"
             />

@@ -44,7 +44,6 @@ const Page = async ({ params, searchParams }: URLProps) => {
                 answer={item.answers}
                 views={item.views}
                 createAt={item.createdAt}
-                type="Collection"
               />
             ))
           ) : (
