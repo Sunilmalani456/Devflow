@@ -32,7 +32,7 @@ const Tags = async () => {
             // @ts-ignore
             result.tags.map((tag) => (
               <Link
-                href={`/tags${tag._id}`}
+                href={`/tags/${tag._id}`}
                 key={tag._id}
                 className="shadow-light100_darknone"
               >
@@ -42,6 +42,9 @@ const Tags = async () => {
                       {tag.name}
                     </p>
                   </div>
+                  <p className="small-medium text-dark300_light900 mt-3.5">
+                    {tag.describtion}
+                  </p>
                   <p
                     className="small-medium text-dark400_light500 mt-3.5
                   "

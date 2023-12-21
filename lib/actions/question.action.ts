@@ -50,7 +50,10 @@ export async function createQuestion(params: CreateQuestionParams) {
             $regex: new RegExp(`^${tag}$`, "i"),
           },
         },
-        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
+        {
+          $setOnInsert: { name: tag, describtion: title },
+          $push: { questions: question._id },
+        },
         { upsert: true, new: true }
       );
       tagDocuments.push(existingTag._id);

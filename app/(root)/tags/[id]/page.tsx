@@ -1,35 +1,29 @@
 // import HomeFilters from "@/components/home/HomeFilters";
-import Filters from "@/components/shared/Filters";
 import LocalSearchbar from "@/components/shared/LocalSearchbar";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/shared/card/QuestionCard";
-import { QuestionFilters } from "@/constant/filters";
-import { getSavedQuestion } from "@/lib/actions/user.action";
-import { auth } from "@clerk/nextjs";
 
-const Page = async () => {
-  const { userId } = auth();
+import { getQuestionsByTagId } from "@/lib/actions/tags.action";
+import { URLProps } from "@/types";
 
-  if (!userId) return null;
-
-  const result = await getSavedQuestion({
-    clerkId: userId,
+const Page = async ({ params, searchParams }: URLProps) => {
+  const result = await getQuestionsByTagId({
+    tagId: params.id,
+    page: 1,
+    searchQuery: searchParams.q,
   });
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
-      <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
+      <h1 className="h1-bold text-dark100_light900 uppercase">
+        {result?.tagTitle}
+      </h1>
+      <div className="mt-11 w-full">
         <LocalSearchbar
           route={"/"}
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeHolder="Search for questions"
+          placeHolder="Search for Tag's Questions"
           otherClasses="flex-1"
-        />
-        <Filters
-          filter={QuestionFilters}
-          otherClasses="min-h-[56px] sm:min-w-[170px]"
-          containerClasses="hidden max-md:flex"
         />
       </div>
       {/* <HomeFilters /> */}
@@ -55,8 +49,8 @@ const Page = async () => {
             ))
           ) : (
             <NoResult
-              title="No Saved Questions Found"
-              description="It appears that there are no saved questions in your collection at the moment 😔.Start exploring and saving questions that pique your interest 🌟"
+              title="No Saved Tag's Questions Found"
+              description="It appears that there are no saved tag's questions in your collection at the moment 😔.Start exploring and saving questions that pique your interest 🌟"
               link="/"
               linkTitle="Explore Questions"
             />
