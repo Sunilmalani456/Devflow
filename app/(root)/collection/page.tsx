@@ -9,6 +9,7 @@ import { auth } from "@clerk/nextjs";
 
 const Page = async () => {
   const { userId } = auth();
+  console.log({ userId });
 
   if (!userId) return null;
 

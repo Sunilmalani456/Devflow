@@ -7,12 +7,14 @@ import QuestionCard from "@/components/shared/card/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { HomePagefilter } from "@/constant/filters";
 import { getQuestions } from "@/lib/actions/question.action";
+import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 
 export default async function Home() {
+  const { userId: clerkId } = auth();
   const result = await getQuestions({});
   // // @ts-ignore
-  // console.log(result.questions);
+  // console.log(result);
 
   return (
     <>
@@ -48,6 +50,8 @@ export default async function Home() {
               <QuestionCard
                 key={item._id}
                 _id={item._id}
+                // @ts-ignore
+                clerkId={clerkId}
                 title={item.title}
                 tag={item.tags}
                 author={item.author}

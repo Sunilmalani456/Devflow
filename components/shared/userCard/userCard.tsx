@@ -35,7 +35,8 @@ const UserCard = async ({ user }: Props) => {
             {user.name}
           </h3>
           <p className="body-regular text-dark500_light500 mt-2">
-            @{user.username}
+            <span className="mr-[3px]">@</span>
+            {user.username}
           </p>
         </div>
         <div className="mt-5">

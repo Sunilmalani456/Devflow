@@ -9,6 +9,8 @@ import Link from "next/link";
 import { getJoinedDate } from "@/lib/utils";
 import ProfileLink from "@/components/shared/ProfileLink";
 import Stats from "@/components/shared/Stats";
+import AnswerTab from "@/components/shared/AnswerTab";
+import QuestionTab from "@/components/shared/QuestionTab";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
@@ -80,11 +82,16 @@ const Page = async ({ params, searchParams }: URLProps) => {
         </div>
       </div>
 
-      <Stats />
+      <Stats
+        // @ts-ignore
+        totalQuestions={userInfo.totalQuestions}
+        // @ts-ignore
+        totalAnswers={userInfo.totalAnswers}
+      />
 
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
-          <TabsList className="background-light800_dark400 min-h-[42px] p-1">
+          <TabsList className="background-light800_dark400 min-h-[42px] p-2">
             <TabsTrigger value="top-posts" className="tab">
               Top Posts
             </TabsTrigger>
@@ -96,20 +103,21 @@ const Page = async ({ params, searchParams }: URLProps) => {
             value="top-posts"
             className="mt-5 flex w-full flex-col gap-6"
           >
-            QUESTION
-            {/* <QuestionsTab
+            <QuestionTab
               searchParams={searchParams}
-              userId={userInfo.user._id}
+              userId={userInfo?.user._id}
+              // @ts-ignore
               clerkId={clerkId}
-            /> */}
+            />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            {/* <AnswersTab
+            <AnswerTab
               searchParams={searchParams}
-              userId={userInfo.user._id}
+              userId={userInfo?.user._id}
+              // @ts-ignore
               clerkId={clerkId}
-            /> */}
-            ANSWERS
+            />
+         
           </TabsContent>
         </Tabs>
       </div>

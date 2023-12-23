@@ -21,9 +21,11 @@ interface Props {
   answer: Array<object>;
   createAt: Date;
   type?: string;
+  clerkId?: string;
 }
 
 const QuestionCard = ({
+  clerkId,
   _id,
   title,
   tag,
@@ -72,8 +74,8 @@ const QuestionCard = ({
             imgUrl={author.picture}
             alt="user"
             value={author.name}
-            title={`--asked ${getTimestamp(createAt)}`}
-            href={`/profile/${author._id}`}
+            title={` • asked ${getTimestamp(createAt)}`}
+            href={`/profile/${clerkId}`}
             isAuthor
             textStyles="body-medium text-dark400_light700"
           />

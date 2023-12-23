@@ -57,11 +57,14 @@ export const formatAndDivideNumber = (number: number): string => {
 };
 
 export function getJoinedDate(date: Date): string {
-  const month = date.toLocaleString("default", { month: "long" });
-  const year = date.getFullYear();
+  // const month = date.toLocaleString("default", { month: "long" });
+  // const year = date.getFullYear();
 
-  // Create joined date string (ex. "September 2023")
-  const joinedDate = `${month} ${year}`;
+  // // Create joined date string (ex. "September 2023")
+  // const joinedDate = `${month} ${year}`;
+  // return joinedDate;
+  const month: string = date.toLocaleString("en", { month: "long" });
+  const year: number = date.getFullYear();
 
-  return joinedDate;
+  return `Joined ${month} ${year}`;
 }
