@@ -57,7 +57,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
               {/* JOINAT */}
               <ProfileLink
                 imgUrl="/assets/icons/calendar.svg"
-                title={`Joined ${getJoinedDate(userInfo?.user.joinedAt)}`}
+                title={`${getJoinedDate(userInfo?.user.joinedAt)}`}
               />
             </div>
 
@@ -117,7 +117,6 @@ const Page = async ({ params, searchParams }: URLProps) => {
               // @ts-ignore
               clerkId={clerkId}
             />
-         
           </TabsContent>
         </Tabs>
       </div>

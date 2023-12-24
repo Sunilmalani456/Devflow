@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { SignedIn } from "@clerk/nextjs";
 
 import Metric from "@/components/shared/Metric";
-
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import EditDeleteAction from "../EditDeleteAction";
 
 interface Props {
   clerkId?: string | null;
@@ -29,10 +30,11 @@ const AnswerCard = ({
   upvotes,
   createdAt,
 }: Props) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
   return (
     <Link
       href={`/question/${question._id}/#${_id}`}
-      className="card-wrapper rounded-[10px] px-11 py-9"
+      className="card-wrapper rounded-[10px] p-9 sm:px-11"
     >
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
@@ -44,7 +46,12 @@ const AnswerCard = ({
           </h3>
         </div>
 
-        {/* <EditDeleteAction /> */}
+        {/* if signed in add edit delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">

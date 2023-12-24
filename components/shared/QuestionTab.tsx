@@ -27,6 +27,7 @@ const QuestionTab = async ({ searchParams, userId, clerkId }: Props) => {
           answer={item.answers}
           views={item.views}
           createAt={item.createdAt}
+          type="Profile"
         />
       ))}
     </>

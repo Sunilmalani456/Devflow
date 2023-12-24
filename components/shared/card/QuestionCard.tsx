@@ -2,7 +2,11 @@ import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Link from "next/link";
 import Metric from "../Metric";
 import RenderTag from "../RenderTag";
+// import Image from "next/image";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteAction from "../EditDeleteAction";
 import Image from "next/image";
+
 
 interface Props {
   _id: string;
@@ -35,7 +39,12 @@ const QuestionCard = ({
   answer,
   createAt,
   type,
+  
 }: Props) => {
+  // @ts-ignore
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+
+ 
   return (
     <div className="card-wrapper rounded-[10px] p-9 shadow-lg sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -49,7 +58,17 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
+    
         {/* if signed in add edit delete actions */}
+
+        <SignedIn>
+            { type === "Profile" && 
+              showActionButtons && (<EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />)
+            }
+        </SignedIn>
+
+     
+        {/* show Saved Icon */}
         {type === "Collection" && (
           <Image
             src="/assets/icons/star-filled.svg"

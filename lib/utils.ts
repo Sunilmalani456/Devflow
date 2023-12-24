@@ -66,5 +66,5 @@ export function getJoinedDate(date: Date): string {
   const month: string = date.toLocaleString("en", { month: "long" });
   const year: number = date.getFullYear();
 
-  return `Joined ${month} ${year}`;
+  return `Joined | ${month} ${year}`;
 }
