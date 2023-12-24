@@ -37,20 +37,20 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
             <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
               {/* PORTFOLIO */}
-              {/* {userInfo.user.portfolioWebsite && (
+              {userInfo?.user.protfolio && (
                 <ProfileLink
                   imgUrl="/assets/icons/link.svg"
-                  href={userInfo.user.portfolioWebsite}
+                  href={userInfo.user.protfolio}
                   title="Portfolio"
                 />
-              )} */}
+              )}
 
               {/* LOCATION */}
               {userInfo?.user.location && (
                 <ProfileLink
                   imgUrl="/assets/icons/location.svg"
-                  href={userInfo.user.location}
-                  title="Portfolio"
+                  // href={userInfo.user.location}
+                  title={userInfo.user.location}
                 />
               )}
 
@@ -63,6 +63,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
             {userInfo?.user.bio && (
               <p className="paragraph-regular text-dark400_light800 mt-8">
+                <span className="font-medium text-primary-500">Bio: </span>
                 {userInfo?.user.bio}
               </p>
             )}
