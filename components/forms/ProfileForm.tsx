@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 /* eslint-disable no-unused-vars */
 "use client";
 
@@ -31,10 +32,23 @@ const ProfileForm = ({ clerkId, user }: Props) => {
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // URL Validation
+  const isURL = (value: string) => {
+    try {
+      new URL(value);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const formSchema = z.object({
     name: z.string().min(5).max(50),
     username: z.string().min(5).max(50),
-    portfolioWebsite: z.string().url(),
+    portfolioWebsite: z
+      .string()
+      .refine((value) => value === "" || isURL(value))
+      .optional(),
     location: z.string().min(5).max(50),
     bio: z.string().min(5).max(150),
   });
@@ -126,12 +140,14 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           name="portfolioWebsite"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel className="text-dark400_light700">Name</FormLabel>
+              <FormLabel className="text-dark400_light700">
+                Portfolio Url
+              </FormLabel>
               <FormControl>
                 <Input
                   type="url"
                   className="light-border-2 paragraph-regular no-focus background-light700_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Your portfolio url"
+                  placeholder="url: https://www.example.com/"
                   {...field}
                 />
               </FormControl>

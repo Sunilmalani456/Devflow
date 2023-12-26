@@ -25,8 +25,8 @@ const Community = async () => {
         />
       </div>
 
-      <section className="mt-10 flex flex-col gap-6">
-        {result.users.length > 0 ? ( 
+      <section className="mt-10 flex flex-col flex-wrap gap-6 sm:flex-row">
+        {result.users.length > 0 ? (
           // @ts-ignore
           result.users.map((user) => <UserCard key={user._id} user={user} />)
         ) : (

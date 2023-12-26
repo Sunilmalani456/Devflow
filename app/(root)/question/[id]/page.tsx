@@ -8,6 +8,8 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
+
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -21,10 +23,13 @@ const Page = async ({ params }) => {
 
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
-    // console.log("mongooo00000000000000 user ", mongoUser);
+    console.log("mongooo00000000000000 user ", mongoUser);
+  } else {
+    return redirect("/sign-in");
   }
 
   const result = await getQuestionById({ questionId: params.id });
+  if (!result) return null;
 
   return (
     <>
@@ -48,6 +53,8 @@ const Page = async ({ params }) => {
 
           {/* VOTES 
           // itemId={JSON.stringify(result._id)}
+          // itemId={result._id}
+          // userId={mongoUser._id}
           // userId={JSON.stringify(mongoUser._id)}
           */}
           <div className="flex justify-end">
