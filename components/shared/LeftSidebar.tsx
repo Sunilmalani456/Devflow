@@ -4,7 +4,7 @@ import { sidebarLinks } from "@/constant";
 import { SignedOut, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 
 const LeftSidebar = () => {
@@ -20,11 +20,11 @@ const LeftSidebar = () => {
 
           // TODO : remove this when profile page is ready
 
-          if (item.route === "/profile") { 
+          if (item.route === "/profile") {
             if (userId) {
               item.route = `/profile/${userId}`;
             } else {
-              return null;
+              return redirect("/sign-in");
             }
           }
 

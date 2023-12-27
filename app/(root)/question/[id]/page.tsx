@@ -23,7 +23,7 @@ const Page = async ({ params }) => {
 
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
-    console.log("mongooo00000000000000 user ", mongoUser);
+    // console.log("mongooo00000000000000 user ", mongoUser);
   } else {
     return redirect("/sign-in");
   }

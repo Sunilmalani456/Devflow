@@ -7,6 +7,7 @@ import Answer from "@/database/answer.model";
 import Interaction from "@/database/interaction.model";
 
 import { revalidatePath } from "next/cache";
+import { FilterQuery } from "mongoose";
 import { connectToDatabase } from "../mongoose";
 import {
   CreateQuestionParams,
@@ -20,7 +21,20 @@ import {
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
-    const questions = await Question.find({})
+
+    const { searchQuery } = params;
+
+    const query: FilterQuery<typeof Question> = {}; // empty query
+
+    if (searchQuery) {
+      // if there is a search query, search for the question title and content
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const questions = await Question.find(query)
       .populate({
         path: "tags",
         model: Tag,

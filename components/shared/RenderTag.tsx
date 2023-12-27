@@ -12,7 +12,7 @@ interface Props {
 const RenderTag = ({ _id, name, showCount, totalCount }: Props) => {
   return (
     <Link href={`/tags/${_id}`} className="mt-4 flex justify-between gap-2">
-      <Badge className="subtle-medium text-light400_light500 rounded-md border-none bg-light-800 px-4 py-2 uppercase dark:bg-dark-400">
+      <Badge className="subtle-medium text-light400_light500 rounded-md border-none bg-light-800 px-4 py-2 uppercase shadow-md dark:bg-dark-400 dark:shadow-none">
         {name}
       </Badge>
 

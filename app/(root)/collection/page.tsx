@@ -6,12 +6,13 @@ import QuestionCard from "@/components/shared/card/QuestionCard";
 import { QuestionFilters } from "@/constant/filters";
 import { getSavedQuestion } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
   const { userId } = auth();
   console.log({ userId });
 
-  if (!userId) return null;
+  if (!userId) return redirect("/sign-in");;
 
   const result = await getSavedQuestion({
     clerkId: userId,

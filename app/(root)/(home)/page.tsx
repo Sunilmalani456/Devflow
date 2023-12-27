@@ -7,12 +7,17 @@ import QuestionCard from "@/components/shared/card/QuestionCard";
 import { Button } from "@/components/ui/button";
 import { HomePagefilter } from "@/constant/filters";
 import { getQuestions } from "@/lib/actions/question.action";
+import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();
-  const result = await getQuestions({});
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+  });
+
+  
   // // @ts-ignore
   // console.log(result);
 
