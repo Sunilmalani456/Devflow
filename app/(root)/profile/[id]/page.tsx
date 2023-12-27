@@ -93,10 +93,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
           <TabsList className="background-light800_dark400 min-h-[42px] p-2">
-            <TabsTrigger value="top-posts" className="tab">
+            <TabsTrigger value="top-posts" className="tab rounded">
               Top Posts
             </TabsTrigger>
-            <TabsTrigger value="answers" className="tab">
+            <TabsTrigger value="answers" className="tab rounded">
               Answers
             </TabsTrigger>
           </TabsList>

@@ -4,10 +4,13 @@ import LocalSearchbar from "@/components/shared/LocalSearchbar";
 import NoResult from "@/components/shared/NoResult";
 import { TagFilters } from "@/constant/filters";
 import { getAllTag } from "@/lib/actions/tags.action";
+import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
-const Tags = async () => {
-  const result = await getAllTag({});
+const Tags = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllTag({
+    searchQuery: searchParams.q,
+  });
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Tags</h1>
