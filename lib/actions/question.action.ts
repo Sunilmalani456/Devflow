@@ -216,7 +216,7 @@ export async function getHotQuestion() {
     connectToDatabase();
 
     const hotQuestions = await Question.find({})
-      .sort({ upvotes: -1, views: -1 }) // sort by descending order
+      .sort({ views: -1, upvotes: -1 }) // sort by descending order
       .limit(5);
 
     return hotQuestions;
