@@ -210,3 +210,17 @@ export async function editQuestion(params: EditQuestionParams) {
     revalidatePath(path);
   } catch (error) {}
 }
+
+export async function getHotQuestion() {
+  try {
+    connectToDatabase();
+
+    const hotQuestions = await Question.find({})
+      .sort({ upvotes: -1, views: -1 }) // sort by descending order
+      .limit(5);
+
+    return hotQuestions;
+  } catch (error) {
+    console.log(error);
+  }
+}
