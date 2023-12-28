@@ -15,9 +15,11 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();
   const result = await getQuestions({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
-  
+  // Recommended is special case filter
+
   // // @ts-ignore
   // console.log(result);
 
