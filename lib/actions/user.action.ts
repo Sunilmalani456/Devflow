@@ -184,7 +184,7 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { clerkId, searchQuery } = params;
+    const { clerkId, searchQuery, filter } = params;
 
     // OLD QUERY CODE
     // const query: FilterQuery<typeof Question> = searchQuery
@@ -202,12 +202,35 @@ export async function getSavedQuestion(params: GetSavedQuestionsParams) {
     }
     // NEW QUERY CODE
 
+    let sortOption = {};
+
+    switch (filter) {
+      case "most_recent":
+        sortOption = { createdAt: -1 };
+        break;
+      case "oldest":
+        sortOption = { createdAt: 1 };
+        break;
+      case "most_voted":
+        sortOption = { upvotes: -1 };
+        break;
+      case "most_viewed":
+        sortOption = { views: -1 };
+        break;
+      case "most_answered":
+        sortOption = { answers: -1 };
+        break;
+
+      default:
+        break;
+    }
+
     // @ts-ignore
     const user = await User.findOne({ clerkId }).populate({
       path: "savedQuestions",
       match: query,
       options: {
-        sort: { createdAt: -1 },
+        sort: sortOption,
       },
 
       populate: [

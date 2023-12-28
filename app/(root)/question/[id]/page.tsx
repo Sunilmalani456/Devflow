@@ -17,7 +17,7 @@ import React from "react";
 // const shouldIncludeUserId  = false;
 
 // @ts-ignore
-const Page = async ({ params }) => {
+const Page = async ({ params, searchParams }) => {
   // console.log(params);
 
   const { userId: clerkId } = auth();
@@ -72,8 +72,12 @@ const Page = async ({ params }) => {
               upvotes={result.upvotes.length}
               hasUpVoted={clerkId ? result.upvotes.includes(mongoUser._id) : ""}
               downvotes={result.downvotes.length}
-              hasDownVoted={clerkId ? result.downvotes.includes(mongoUser._id) : ""}
-              hasSaved={clerkId ? mongoUser?.savedQuestions.includes(result._id) : ""}
+              hasDownVoted={
+                clerkId ? result.downvotes.includes(mongoUser._id) : ""
+              }
+              hasSaved={
+                clerkId ? mongoUser?.savedQuestions.includes(result._id) : ""
+              }
               // hasSaved={mongoUser?.saved.includes(result._id)}
             />
           </div>
@@ -130,6 +134,8 @@ const Page = async ({ params }) => {
         userId={clerkId ? mongoUser._id : ""}
         // userId={mongoUser._id}
         totalAnswers={result.answers.length}
+        page={searchParams?.page}
+        filter={searchParams?.filter}
       />
 
       <Answer

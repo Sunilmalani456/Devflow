@@ -17,6 +17,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getSavedQuestion({
     clerkId: userId,
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
   return (
     <>
@@ -32,7 +33,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         <Filters
           filter={QuestionFilters}
           otherClasses="min-h-[56px] sm:min-w-[170px]"
-          containerClasses="hidden max-md:flex"
+          containerClasses="max-md:flex"
         />
       </div>
       {/* <HomeFilters /> */}
