@@ -22,7 +22,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
 
-    const { searchQuery } = params;
+    const { searchQuery, filter } = params;
 
     const query: FilterQuery<typeof User> = {};
 
@@ -33,8 +33,25 @@ export async function getAllUsers(params: GetAllUsersParams) {
       ];
     }
 
+    let sortOption = {};
+
+    switch (filter) {
+      case "new_users":
+        sortOption = { createdAt: -1 };
+        break;
+      case "old_users":
+        sortOption = { createdAt: 1 };
+        break;
+      case "top_contributors":
+        sortOption = { reputation: -1 };
+        break;
+
+      default:
+        break;
+    }
+
     // @ts-ignore
-    const users = await User.find(query).sort({ createdAt: -1 });
+    const users = await User.find(query).sort(sortOption);
 
     return { users };
   } catch (error) {

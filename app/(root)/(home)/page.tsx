@@ -18,7 +18,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     filter: searchParams.filter,
   });
 
-  // Recommended is special case filter
+  // Recommended is special casefilter
 
   // // @ts-ignore
   // console.log(result);
