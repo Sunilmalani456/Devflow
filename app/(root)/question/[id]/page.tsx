@@ -1,18 +1,20 @@
 import Answer from "@/components/forms/Answer";
 import AllAnswers from "@/components/shared/AllAnswers";
+import Votes from "@/components/shared/Votes";
 import Metric from "@/components/shared/Metric";
 import RenderTag from "@/components/shared/RenderTag";
-import Votes from "@/components/shared/Votes";
 import ParseHTML from "@/components/shared/parseHTML";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
+// const shouldIncludeUserId  = false;
 
 // @ts-ignore
 const Page = async ({ params }) => {
@@ -23,10 +25,14 @@ const Page = async ({ params }) => {
 
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
+    // console.log({clerkId});
     // console.log("mongooo00000000000000 user ", mongoUser);
-  } else {
-    return redirect("/sign-in");
+    // shouldIncludeUserId = true;
   }
+  // else {
+  //   // shouldIncludeUserId = false;
+  //   return null;
+  // }
 
   const result = await getQuestionById({ questionId: params.id });
   if (!result) return null;
@@ -61,12 +67,13 @@ const Page = async ({ params }) => {
             <Votes
               type="Question"
               itemId={result._id}
-              userId={mongoUser._id}
+              userId={clerkId ? mongoUser._id : ""}
+              // userId={mongoUser._id}
               upvotes={result.upvotes.length}
-              hasUpVoted={result.upvotes.includes(mongoUser._id)}
+              hasUpVoted={clerkId ? result.upvotes.includes(mongoUser._id) : ""}
               downvotes={result.downvotes.length}
-              hasDownVoted={result.downvotes.includes(mongoUser._id)}
-              hasSaved={mongoUser?.savedQuestions.includes(result._id)}
+              hasDownVoted={clerkId ? result.downvotes.includes(mongoUser._id) : ""}
+              hasSaved={clerkId ? mongoUser?.savedQuestions.includes(result._id) : ""}
               // hasSaved={mongoUser?.saved.includes(result._id)}
             />
           </div>
@@ -120,14 +127,16 @@ const Page = async ({ params }) => {
 
       <AllAnswers
         questionId={result._id}
-        userId={mongoUser._id}
+        userId={clerkId ? mongoUser._id : ""}
+        // userId={mongoUser._id}
         totalAnswers={result.answers.length}
       />
 
       <Answer
         question={result.content}
         questionId={JSON.stringify(result._id)}
-        authorId={JSON.stringify(mongoUser._id)}
+        authorId={clerkId ? JSON.stringify(mongoUser._id) : ""}
+        // authorId={JSON.stringify(mongoUser._id)}
       />
     </>
   );

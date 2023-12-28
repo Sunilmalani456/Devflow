@@ -13,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import { useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 
 interface Props {
   type: string;
@@ -36,63 +37,70 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   // Path Hooks
+  const { userId: clerkId } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
 
   // HANDLE VOTE
   const handleVote = async (action: string) => {
-    if (!userId) return;
-
-    if (action === "upvote") {
-      if (type === "Question") {
-        await upvoteQuestion({
-          questionId: itemId,
-          userId,
-          hasdownVoted: hasDownVoted,
-          hasupVoted: hasUpVoted,
-          path: pathname,
-        });
-      } else if (type === "Answer") {
-        await upvoteAnswer({
-          answerId: JSON.parse(itemId),
-          userId: JSON.parse(userId),
-          hasdownVoted: hasDownVoted,
-          hasupVoted: hasUpVoted,
-          path: pathname,
-        });
+    if (clerkId) {
+      if (action === "upvote") {
+        if (type === "Question") {
+          await upvoteQuestion({
+            questionId: itemId,
+            userId,
+            hasdownVoted: hasDownVoted,
+            hasupVoted: hasUpVoted,
+            path: pathname,
+          });
+        } else if (type === "Answer") {
+          await upvoteAnswer({
+            answerId: JSON.parse(itemId),
+            userId: JSON.parse(userId),
+            hasdownVoted: hasDownVoted,
+            hasupVoted: hasUpVoted,
+            path: pathname,
+          });
+        }
       }
-    }
-    // TODO: add a toast notification
+      // TODO: add a toast notification
 
-    if (action === "downvote") {
-      if (type === "Question") {
-        await downvoteQuestion({
-          questionId: itemId,
-          userId,
-          hasdownVoted: hasDownVoted,
-          hasupVoted: hasUpVoted,
-          path: pathname,
-        });
-      } else if (type === "Answer") {
-        await downvoteAnswer({
-          answerId: JSON.parse(itemId),
-          userId: JSON.parse(userId),
-          hasdownVoted: hasDownVoted,
-          hasupVoted: hasUpVoted,
-          path: pathname,
-        });
+      if (action === "downvote") {
+        if (type === "Question") {
+          await downvoteQuestion({
+            questionId: itemId,
+            userId,
+            hasdownVoted: hasDownVoted,
+            hasupVoted: hasUpVoted,
+            path: pathname,
+          });
+        } else if (type === "Answer") {
+          await downvoteAnswer({
+            answerId: JSON.parse(itemId),
+            userId: JSON.parse(userId),
+            hasdownVoted: hasDownVoted,
+            hasupVoted: hasUpVoted,
+            path: pathname,
+          });
+        }
       }
+      // TODO: add a toast notification
+    } else {
+      console.log("clerkId is not log in");
     }
-    // TODO: add a toast notification
   };
 
   // HANDLE SAVE
   const handleSave = async () => {
-    await toggleSaveQuestion({
-      questionId: itemId,
-      userId,
-      path: pathname,
-    });
+    if (clerkId) {
+      await toggleSaveQuestion({
+        questionId: itemId,
+        userId,
+        path: pathname,
+      });
+    } else {
+      console.log("clerkId is not log in");
+    }
   };
 
   // UseEffect Hook

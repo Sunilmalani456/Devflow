@@ -7,13 +7,12 @@ import { QuestionFilters } from "@/constant/filters";
 import { getSavedQuestion } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
   console.log({ userId });
 
-  if (!userId) return redirect("/sign-in");
+  if (!userId) return null;
 
   const result = await getSavedQuestion({
     clerkId: userId,

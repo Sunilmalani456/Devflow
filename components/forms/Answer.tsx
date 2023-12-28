@@ -19,6 +19,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 
 interface Props {
   question: string;
@@ -28,6 +29,7 @@ interface Props {
 
 const Answer = ({ question, questionId, authorId }: Props) => {
   // HOOKS
+  const { userId } = useAuth();
   const pathName = usePathname();
   const { mode } = useTheme();
   const editorRef = React.useRef(null);
@@ -44,17 +46,24 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     setIsSubmitting(true);
 
     try {
-      await createAnswer({
-        content: values.answer,
-        author: JSON.parse(authorId),
-        question: JSON.parse(questionId),
-        path: pathName,
-      });
-      form.reset();
-      if (editorRef.current) {
-        const editer = editorRef.current as any;
+      if (userId) {
+        // if user is logged in
+        await createAnswer({
+          content: values.answer,
+          author: JSON.parse(authorId),
+          question: JSON.parse(questionId),
+          path: pathName,
+        });
+        form.reset();
+        if (editorRef.current) {
+          // reset editor
+          const editer = editorRef.current as any;
 
-        editer.setContent("");
+          editer.setContent("");
+        }
+      } else {
+        // if user is not logged in to send tost message noification
+        console.log("user is not logged in");
       }
     } catch (error) {
       console.log(error);
