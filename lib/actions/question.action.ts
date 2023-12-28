@@ -46,15 +46,12 @@ export async function getQuestions(params: GetQuestionsParams) {
       case "unanswered":
         query.answers = { $size: 0 }; // filter questions that have no answers
         break;
-      default:  
+      default:   
         break;
     }
 
     const questions = await Question.find(query)
-      .populate({
-        path: "tags",
-        model: Tag,
-      })
+      .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
       .sort(sortOptions);
 

@@ -48,7 +48,7 @@ const LocalSearchbar = ({
             keysToRemove: ["q"],
           });
 
-          router.push(route, { scroll: false });
+          router.push(newUrl, { scroll: false });
         }
       }
     }, 300);

@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable tailwindcss/no-custom-classname */
+"use client";
+
 import {
   Select,
   SelectContent,
@@ -32,7 +34,7 @@ const Filters = ({
 
   const paramFilter = searchParams.get("filter");
 
-  const handleUpdateQuery = (value: string) => {
+  const handleUpdateParams = (value: string) => {
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
       key: "filter",
@@ -44,8 +46,8 @@ const Filters = ({
   return (
     <div className={`relative ${containerClasses}`}>
       <Select
-        onValueChange={(value) => handleUpdateQuery(value)}
-        //  onValueChange={handleUpdateQuery}
+        // onValueChange={(value) => handleUpdateParams(value)}
+        onValueChange={handleUpdateParams}
         defaultValue={paramFilter || undefined}
       >
         <SelectTrigger
