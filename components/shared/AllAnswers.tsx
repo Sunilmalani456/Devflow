@@ -2,12 +2,13 @@ import React from "react";
 import Filters from "./Filters";
 import { AnswerFilters } from "@/constant/filters";
 import { getAnswers } from "@/lib/actions/answer.action";
+import Pagination from "./Pagination";
 import Link from "next/link";
 import Image from "next/image";
 import { getTimestamp } from "@/lib/utils";
 import ParseHTML from "./parseHTML";
 import Votes from "./Votes";
-import Pagination from "./Pagination";
+
 
 interface Props {
   questionId: string;
@@ -79,6 +80,7 @@ const AllAnswers = async ({
           </article>
         ))}
       </div>
+
       <div className="mb-2 mt-8 w-full">
         <Pagination
           pageNumber={page ? +page : 1}
