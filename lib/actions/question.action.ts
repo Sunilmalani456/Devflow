@@ -22,7 +22,10 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 20 } = params;
+
+    // calculate the number of post to skip based on the page number and page size
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof Question> = {}; // empty query
 
@@ -46,16 +49,30 @@ export async function getQuestions(params: GetQuestionsParams) {
       case "unanswered":
         query.answers = { $size: 0 }; // filter questions that have no answers
         break;
-      default:   
+      default:
         break;
     }
 
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort(sortOptions);
 
-    return { questions };
+    const totalQuestions = await Question.countDocuments(query);
+
+    const isNext = totalQuestions > skipAmount + questions.length;
+
+    // For isNext ->
+    // check if there is a next page by comparing the total number of (questions.length) which mean no. of questions in the current page we show and (skipAmount) which mean the number of questions we skip
+
+    // example ->
+    // 100(total questions) = 4 (pages) * 20 (skiped questions mean total 80) + 20 (questions in the current page we show mean we have on 5 page)
+
+    // if totalQuestions is 101 then isNext is true because we have 1 more question in the next page
+
+    return { questions, isNext };
   } catch (error) {
     console.log(error);
   }
