@@ -5,11 +5,13 @@ import { UserFilters } from "@/constant/filters";
 import { SearchParamsProps } from "@/types";
 import { getAllUsers } from "@/lib/actions/user.action";
 import Link from "next/link";
+import Pagination from "@/components/shared/Pagination";
 
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
   return (
     <>
@@ -44,6 +46,12 @@ const Community = async ({ searchParams }: SearchParamsProps) => {
           </>
         )}
       </section>
+      <div className="mb-2 mt-8">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result?.isNext}
+        />
+      </div>
     </>
   );
 };
