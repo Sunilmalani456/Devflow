@@ -1,4 +1,3 @@
-/* eslint-disable no-const-assign */
 "use server";
 
 import { connectToDatabase } from "../mongoose";
@@ -12,7 +11,7 @@ const searchableTypes = ["question", "user", "answer", "tag"];
 
 export async function globalSearch(params: SearchParams) {
   try {
-    await connectToDatabase();
+    connectToDatabase();
 
     const { query, type } = params;
 
@@ -29,7 +28,7 @@ export async function globalSearch(params: SearchParams) {
 
     const typeLower = type?.toLowerCase();
 
-    if (!typeLower || searchableTypes.includes(typeLower)) {
+    if (!typeLower || !searchableTypes.includes(typeLower)) {
       // SEARCH ACROSS EVERY-THING
 
       for (const { model, searchField, type } of modelsAndTypes) {
@@ -62,9 +61,7 @@ export async function globalSearch(params: SearchParams) {
       }
 
       const queryResults = await modelInfo.model
-        .find({
-          [modelInfo.searchField]: regexQuery,
-        })
+        .find({ [modelInfo.searchField]: regexQuery })
         .limit(8);
 
       results = queryResults.map((item: any) => ({

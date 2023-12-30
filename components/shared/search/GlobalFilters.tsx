@@ -46,10 +46,10 @@ const GlobalFilters = () => {
           <button
             key={filter.value}
             type="button"
-            className={`light-border-2 small-medium rounded-3xl px-5 py-2 capitalize dark:text-light-800 dark:hover:text-primary-500 ${
+            className={`light-border-2 small-medium rounded-3xl px-5 py-2 capitalize ${
               active === filter.value
-                ? "bg-primary-500 text-light-900 hover:text-dark-400 dark:hover:text-light-900"
-                : "bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500"
+                ? "bg-primary-500 text-light-900"
+                : "bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500 dark:text-light-900 dark:hover:text-primary-500"
             }`}
             onClick={() => handleTypeClick(filter.value)}
           >
