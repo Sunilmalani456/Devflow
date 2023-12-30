@@ -105,6 +105,7 @@ const GlobalResult = () => {
           ) : (
             <div>
               <div className="flex-center flex-col px-5">
+                <p className="text-4xl">🫣</p>
                 <p className="text-dark200_light800 body-regular px-5 py-2.5">
                   Oops, no result found.
                 </p>
