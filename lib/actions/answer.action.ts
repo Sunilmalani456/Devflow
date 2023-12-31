@@ -12,6 +12,7 @@ import {
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
 import Interaction from "@/database/interaction.model";
+import User from "@/database/user.model";
 
 export async function createAnswer(params: CreateAnswerParams) {
   connectToDatabase();
@@ -21,11 +22,21 @@ export async function createAnswer(params: CreateAnswerParams) {
     // console.log({ newAnswer });
 
     // add the answer to question's answer array
-    await Question.findByIdAndUpdate(question, {
+    const questionObject = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
 
-    // TODO: add intreection
+    // increment author's reputation by +5 points for creating the answer
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: newAnswer._id,
+      tags: questionObject.tags,
+    });
+
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -107,6 +118,16 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
     }
 
     // increment author's reputation by +5 points for updating the question
+
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
+
+    //  author of the answer
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -147,6 +168,15 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
     }
 
     // increment author's reputation by +5 points for updating the question
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? -2 : 2 },
+    });
+
+    //  author of the answer
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
+    
     revalidatePath(path);
   } catch (error) {
     console.log(error);
