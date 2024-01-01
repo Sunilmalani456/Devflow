@@ -84,7 +84,6 @@ const Page = async ({ params, searchParams }: URLProps) => {
       </div>
 
       <Stats
-        // @ts-ignore
         reputation={userInfo?.reputation}
         // @ts-ignore
         totalQuestions={userInfo?.totalQuestions}

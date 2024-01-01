@@ -287,12 +287,12 @@ export async function getUserInfo(params: GetUserByIdParams) {
 
     const [questionUpvotes] = await Question.aggregate([
       { $match: { author: user._id } },
-      { $project: { _id: 0, $upvotes: { $size: "$upvotes" } } },
+      { $project: { _id: 0, upvotes: { $size: "$upvotes" } } },
       { $group: { _id: null, totalUpvotes: { $sum: "$upvotes" } } },
     ]);
     const [answerUpvotes] = await Question.aggregate([
       { $match: { author: user._id } },
-      { $project: { _id: 0, $upvotes: { $size: "$upvotes" } } },
+      { $project: { _id: 0, upvotes: { $size: "$upvotes" } } },
       { $group: { _id: null, totalUpvotes: { $sum: "$upvotes" } } },
     ]);
     const [questionViews] = await Question.aggregate([

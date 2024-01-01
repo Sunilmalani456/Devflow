@@ -66,7 +66,8 @@ export function getJoinedDate(date: Date): string {
   // // Create joined date string (ex. "September 2023")
   // const joinedDate = `${month} ${year}`;
   // return joinedDate;
-  const month: string = date.toLocaleString("en", { month: "long" });
+
+  const month: string = date.toLocaleString("default", { month: "long" });
   const year: number = date.getFullYear();
 
   return `Joined | ${month} ${year}`;
@@ -132,5 +133,8 @@ export const assignBadges = (params: BadgeParam) => {
     });
   });
 
-  return badgeCounts; 
+  return badgeCounts;
 }; 
+
+
+
