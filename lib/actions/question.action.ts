@@ -180,14 +180,16 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     }
 
     // increment author's reputation by +1/-1 points for upVoting/revoking an upvote the question
-    await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasupVoted ? -1 : 1 },
-    });
+    if (userId !== question.author.toString()) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasupVoted ? -1 : 1 },
+      });
 
-    // increment author's reputation by +10/-10 points for recieving an upVoting/downvoting to the question from other users
-    await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasupVoted ? -10 : 10 },
-    });
+      // increment author's reputation by +10/-10 points for recieving an upVoting/downvoting to the question from other users
+      await User.findByIdAndUpdate(question.author, {
+        $inc: { reputation: hasupVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -229,14 +231,18 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     }
 
     // increment author's reputation by +2 points for downVoting/revoking the question
-    await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasdownVoted ? -2 : 2 },
-    });
 
-    //  author of the answer
-    await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasdownVoted ? -10 : 10 },
-    });
+    if (userId !== question.author.toString()) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasdownVoted ? -2 : 2 },
+      });
+
+      //  author of the answer
+      await User.findByIdAndUpdate(question.author, {
+        $inc: { reputation: hasdownVoted ? -10 : 10 },
+      });
+    }
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);

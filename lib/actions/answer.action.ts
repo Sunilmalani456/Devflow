@@ -118,15 +118,16 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
     }
 
     // increment author's reputation by +5 points for updating the question
+    if (userId !== answer.author.toString()) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasupVoted ? -2 : 2 },
+      });
 
-    await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasupVoted ? -2 : 2 },
-    });
-
-    //  author of the answer
-    await User.findByIdAndUpdate(answer.author, {
-      $inc: { reputation: hasupVoted ? -10 : 10 },
-    });
+      //  author of the answer
+      await User.findByIdAndUpdate(answer.author, {
+        $inc: { reputation: hasupVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -168,15 +169,17 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
     }
 
     // increment author's reputation by +5 points for updating the question
-    await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasdownVoted ? -2 : 2 },
-    });
+    if (userId !== answer.author.toString()) {
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasdownVoted ? -2 : 2 },
+      });
 
-    //  author of the answer
-    await User.findByIdAndUpdate(answer.author, {
-      $inc: { reputation: hasdownVoted ? -10 : 10 },
-    });
-    
+      //  author of the answer
+      await User.findByIdAndUpdate(answer.author, {
+        $inc: { reputation: hasdownVoted ? -10 : 10 },
+      });
+    }
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
