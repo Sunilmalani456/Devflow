@@ -14,6 +14,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import { useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   type: string;
@@ -62,8 +63,13 @@ const Votes = ({
             path: pathname,
           });
         }
+
+        // toast notification
+        return toast({
+          title: `Upvoted ⬆ ${!hasUpVoted ? "successful" : "removed"}`,
+          variant: !hasUpVoted ? "default" : "destructive",
+        });
       }
-      // TODO: add a toast notification
 
       if (action === "downvote") {
         if (type === "Question") {
@@ -83,10 +89,17 @@ const Votes = ({
             path: pathname,
           });
         }
+        // TODO: toast notification
+        return toast({
+          title: `DownVoted ⬇ ${!hasDownVoted ? "successful" : "removed"}`,
+          variant: !hasDownVoted ? "default" : "destructive",
+        });
       }
-      // TODO: add a toast notification
     } else {
-      console.log("clerkId is not log in");
+      return toast({
+        title: "Please logged in",
+        description: "You must be logged in to perform this action",
+      });
     }
   };
 
@@ -98,8 +111,18 @@ const Votes = ({
         userId,
         path: pathname,
       });
+
+      return toast({
+        title: `Question ${
+          !hasSaved ? "Saved in" : "Removed from"
+        } Your collection`,
+        variant: !hasSaved ? "default" : "destructive",
+      });
     } else {
-      console.log("clerkId is not log in");
+      return toast({
+        title: "Please logged in",
+        description: "You must be logged in to perform this action",
+      });
     }
   };
 

@@ -102,7 +102,7 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel className="text-dark400_light700">
+              <FormLabel className="text-dark400_light700 paragraph-semibold">
                 Name <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -121,7 +121,7 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           name="username"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel className="text-dark400_light700">
+              <FormLabel className="text-dark400_light700 paragraph-semibold">
                 Username <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -140,7 +140,7 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           name="portfolioWebsite"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel className="text-dark400_light700">
+              <FormLabel className="text-dark400_light700 paragraph-semibold">
                 Portfolio Url
               </FormLabel>
               <FormControl>
@@ -160,7 +160,9 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           name="location"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel className="text-dark400_light700">Location</FormLabel>
+              <FormLabel className="text-dark400_light700 paragraph-semibold">
+                Location <span className="text-primary-500">*</span>
+              </FormLabel>
               <FormControl>
                 <Input
                   className="light-border-2 paragraph-regular no-focus background-light700_dark300 text-dark300_light700 min-h-[56px] border"
@@ -177,7 +179,7 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           name="bio"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel className="text-dark400_light700">
+              <FormLabel className="text-dark400_light700 paragraph-semibold">
                 Bio <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>

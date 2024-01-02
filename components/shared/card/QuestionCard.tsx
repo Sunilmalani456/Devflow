@@ -58,16 +58,15 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
-    
+
         {/* if signed in add edit delete actions */}
 
         <SignedIn>
-            { type === "Profile" && 
-              showActionButtons && (<EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />)
-            }
+          {type === "Profile" && showActionButtons && (
+            <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
+          )}
         </SignedIn>
 
-     
         {/* show Saved Icon */}
         {type === "Collection" && (
           <Image
@@ -99,7 +98,7 @@ const QuestionCard = ({
             textStyles="body-medium text-dark400_light700"
           />
         </div>
-        <div className="flex gap-6">
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
