@@ -66,8 +66,8 @@ const Votes = ({
 
         // toast notification
         return toast({
-          title: `Upvoted ⬆ ${!hasUpVoted ? "successful" : "removed"}`,
           variant: !hasUpVoted ? "default" : "destructive",
+          title: `Upvoted ⬆ ${!hasUpVoted ? "successful" : "removed"}`,
         });
       }
 
@@ -91,8 +91,8 @@ const Votes = ({
         }
         // TODO: toast notification
         return toast({
-          title: `DownVoted ⬇ ${!hasDownVoted ? "successful" : "removed"}`,
           variant: !hasDownVoted ? "default" : "destructive",
+          title: `DownVoted ⬇ ${!hasDownVoted ? "successful" : "removed"}`,
         });
       }
     } else {
