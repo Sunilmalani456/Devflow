@@ -30,7 +30,7 @@ export function Toaster() {
             {...props}
             className={`text-dark100_light900 border-light-700 bg-light-900 px-4 py-3 ${
               variant === "destructive"
-                ? "dark:bg-red-800"
+                ? "bg-red-800 text-light-900"
                 : "dark:bg-[#020617]"
             } dark:border-dark-400`}
           >
