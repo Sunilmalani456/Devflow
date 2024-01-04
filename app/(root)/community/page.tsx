@@ -7,6 +7,12 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import Link from "next/link";
 import Pagination from "@/components/shared/Pagination";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Community | DevOverflow",
+};
+
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,

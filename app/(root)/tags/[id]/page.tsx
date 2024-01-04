@@ -4,8 +4,22 @@ import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
 import QuestionCard from "@/components/shared/card/QuestionCard";
 
-import { getQuestionsByTagId } from "@/lib/actions/tags.action";
+import { getQuestionsByTagId, getTagById } from "@/lib/actions/tags.action";
+
 import { URLProps } from "@/types";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: Omit<URLProps, "searchParams">): Promise<Metadata> {
+  const tag = await getTagById({ tagId: params.id });
+
+  return {
+    title: `Posts by tag '${tag.name}' | DevOverflow`,
+    description: tag.description || `Questions tagged with ${tag.name}`,
+  };
+}
+
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({

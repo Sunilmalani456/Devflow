@@ -1,6 +1,6 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Button } from "@/components/ui/button";
-import { getUserInfo } from "@/lib/actions/user.action";
+import { getUserById, getUserInfo } from "@/lib/actions/user.action";
 import { URLProps } from "@/types";
 import { SignedIn, auth } from "@clerk/nextjs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,6 +11,17 @@ import ProfileLink from "@/components/shared/ProfileLink";
 import Stats from "@/components/shared/Stats";
 import AnswerTab from "@/components/shared/AnswerTab";
 import QuestionTab from "@/components/shared/QuestionTab";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: Omit<URLProps, "searchParams">): Promise<Metadata> {
+  const user = await getUserById({ userId: params.id });
+
+  return {
+    title: `${user.username}'s Profile | DevOverflow`,
+  };
+}
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();

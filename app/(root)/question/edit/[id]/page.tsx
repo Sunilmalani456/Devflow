@@ -4,6 +4,12 @@ import { getUserById } from "@/lib/actions/user.action";
 import { ParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Question | DevOverflow",
+};
+
 
 const Page = async ({ params }: ParamsProps) => {
   const { userId } = auth();

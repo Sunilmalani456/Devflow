@@ -212,3 +212,48 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
     revalidatePath(path);
   } catch (error) {}
 }
+
+// ------------------ get answer by id ------------------
+
+// export async function getAnswerById(params: GetAnswerByIdParams) {
+//   try {
+//     connectToDatabase();
+
+//     const { answerId } = params;
+
+//     const answer = await Answer.findById(answerId).populate(
+//       "author",
+//       "_id clerkId name picture"
+//     );
+
+//     return answer;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
+
+// ------------------ edit answer ------------------ 
+
+// export async function editAnswer(params: EditAnswerParams) {
+//   try {
+//     connectToDatabase();
+
+//     const { answerId, content, path } = params;
+
+//     const answer = await Answer.findById(answerId);
+
+//     if (!answer) {
+//       throw new Error("Answer not found");
+//     }
+
+//     answer.content = content;
+
+//     await answer.save();
+
+//     redirect(path);
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }

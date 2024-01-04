@@ -9,12 +9,23 @@ import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 
-// import { redirect } from "next/navigation";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-// const shouldIncludeUserId  = false;
+import type { Metadata } from "next";
+import { URLProps } from "@/types";
+
+export async function generateMetadata({
+  params,
+}: Omit<URLProps, "searchParams">): Promise<Metadata> {
+  const question = await getQuestionById({ questionId: params.id });
+
+  return {
+    title: `"${question.title}" | DevOverflow`,
+  };
+}
 
 // @ts-ignore
 const Page = async ({ params, searchParams }) => {
@@ -27,12 +38,7 @@ const Page = async ({ params, searchParams }) => {
     mongoUser = await getUserById({ userId: clerkId });
     // console.log({clerkId});
     // console.log("mongooo00000000000000 user ", mongoUser);
-    // shouldIncludeUserId = true;
   }
-  // else {
-  //   // shouldIncludeUserId = false;
-  //   return null;
-  // }
 
   const result = await getQuestionById({ questionId: params.id });
   if (!result) return null;

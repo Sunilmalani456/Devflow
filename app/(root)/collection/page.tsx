@@ -9,6 +9,13 @@ import { getSavedQuestion } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Collection | DevOverflow",
+};
+
+
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
   console.log({ userId });

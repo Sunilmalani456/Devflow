@@ -15,6 +15,12 @@ import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import Pagination from "../../../components/shared/Pagination";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | DevOverflow",
+};
+
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId: clerkId } = auth();
 
