@@ -66,7 +66,7 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 border-none"
+        className="border-none bg-light-900 dark:bg-[#020617]"
       >
         <Link href="/" className="flex items-center gap-1">
           <Image
@@ -80,7 +80,7 @@ const MobileNav = () => {
           </p>
         </Link>
         <div>
-          <SheetClose asChild >
+          <SheetClose asChild>
             <NavContent />
           </SheetClose>
 
