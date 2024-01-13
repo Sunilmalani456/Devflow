@@ -6,8 +6,13 @@ import React from "react";
 interface MetricProps {
   imgUrl: string;
   alt: string;
+<<<<<<< HEAD
   value: string | number;
   title: HTMLSpanElement | string;
+=======
+  value: string;
+  title: string;
+>>>>>>> b4deca00a1c4cc6f2a6bcb30d9e5ac71f4dd1195
   textStyles: string;
   href?: string;
   isAuthor?: boolean;
@@ -32,7 +37,7 @@ const Metric = ({
         className={`-mt-0.5 object-contain ${href ? "rounded-full" : ""}`}
       />
       <p className={`${textStyles} flex items-center gap-2`}>
-        {value}
+        {value === "undefined" ? " " : value}
         <span
           className={`samll-regular line-clamp-1 ${
             isAuthor ? "max-sm:hidden" : ""

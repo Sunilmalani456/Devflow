@@ -12,7 +12,7 @@ interface Props {
 
 const NoResult = ({ title, description, link, linkTitle }: Props) => {
   return (
-    <div className="w-full flex flex-col items-center justify-center mt-10">
+    <div className="mt-10 flex w-full flex-col items-center justify-center">
       <Image
         src="/assets/images/light-illustration.png"
         alt="No Result Illustration"
@@ -32,7 +32,7 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
         {description}
       </p>
       <Link href={link}>
-        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg primary-gradient px-4 py-3 text-light-900 hover:bg-primary-500 dark:primary-gradient dark:text-light-900">
+        <Button className="paragraph-medium primary-gradient dark:primary-gradient mt-5 min-h-[46px] rounded-lg px-4 py-3 text-light-900 hover:bg-primary-500 dark:text-light-900">
           {linkTitle}
         </Button>
       </Link>

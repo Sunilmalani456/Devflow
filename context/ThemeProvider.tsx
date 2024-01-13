@@ -20,7 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     ) {
         setMode("dark");
         document.documentElement.classList.add("dark");
-        console.log("dark");
+        // console.log("dark");
 
 
     } else {

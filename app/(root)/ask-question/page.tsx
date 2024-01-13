@@ -1,15 +1,19 @@
 import Question from "@/components/forms/question";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Ask a Question — DevOverflow",
+};
 
 const page = async () => {
   const { userId } = auth();
 
-  if (!userId) redirect("/sign-in");
+  if (!userId) return null;
 
   const mongoUser = await getUserById({ userId });
-  console.log(mongoUser);
+  // console.log(mongoUser);
 
   return (
     <div>

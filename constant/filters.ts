@@ -95,3 +95,10 @@ export const AnswerFilters = [
   { name: "Most Recent", value: "recent" },
   { name: "Oldest", value: "old" },
 ];
+
+export const JobPageFilters = [
+  { name: "Full-time", value: "fulltime" },
+  { name: "Part-time", value: "parttime" },
+  { name: "Contractor", value: "contractor" },
+  { name: "Internship", value: "intern" },
+];
