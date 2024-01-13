@@ -31,7 +31,7 @@ const Stats = ({ totalQuestions, totalAnswers, badges, reputation }: Props) => {
   return (
     <div className="mt-10">
       <h4 className="h3-semibold text-dark200_light900">
-        Stats 📊 - {reputation}
+        Stats 📊 - {reputation} Points
       </h4>
 
       <div className="mt-5 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-4">

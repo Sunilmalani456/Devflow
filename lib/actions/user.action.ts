@@ -18,6 +18,7 @@ import {
   GetUserStatsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
+  UpdateUserProfileParams,
 } from "./share.types";
 
 export async function getAllUsers(params: GetAllUsersParams) {
@@ -100,11 +101,27 @@ export async function createUser(userData: CreateUserParams) {
   }
 }
 
+export async function updateUserProfile(params: UpdateUserProfileParams) {
+  try {
+    connectToDatabase();
+    const { clerkId, userPicture } = params;
+
+    await User.findOneAndUpdate(
+      { clerkId },
+      { picture: userPicture },
+      {
+        new: true,
+      }
+    );
+  } catch (error) {}
+}
+
 export async function updateUser(params: UpdateUserParams) {
   try {
     connectToDatabase();
 
     const { clerkId, updateData, path } = params;
+
 
     await User.findOneAndUpdate({ clerkId }, updateData, {
       new: true,

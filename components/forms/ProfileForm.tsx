@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 /* eslint-disable no-unused-vars */
+// @ts-nocheck
 "use client";
 
 import { useState } from "react";
@@ -20,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { usePathname, useRouter } from "next/navigation";
 import { updateUser } from "@/lib/actions/user.action";
+import Image from "next/image";
 
 interface Props {
   clerkId: string;
@@ -31,6 +33,8 @@ const ProfileForm = ({ clerkId, user }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
 
   // URL Validation
   const isURL = (value: string) => {
@@ -39,6 +43,34 @@ const ProfileForm = ({ clerkId, user }: Props) => {
       return true;
     } catch (error) {
       return false;
+    }
+  };
+
+
+  // const addImageFromDevice = (e) => {
+  //   const file = e.target.files[0];
+
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setPreviewImage(reader.result as string);
+  //       form.setValue('picture', reader.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+        console.log(previewImage);
+      };
+      reader.readAsDataURL(file);
+      console.log(previewImage);
     }
   };
 
@@ -51,6 +83,7 @@ const ProfileForm = ({ clerkId, user }: Props) => {
       .optional(),
     location: z.string().min(5).max(50),
     bio: z.string().min(5).max(150),
+    picture: z.string().optional(),
   });
 
   // 1. Define your form.
@@ -59,9 +92,10 @@ const ProfileForm = ({ clerkId, user }: Props) => {
     defaultValues: {
       name: parsed.name || "",
       username: parsed.username || "",
-      portfolioWebsite: parsed.portfolioWebsite || "",
+      portfolioWebsite: parsed.protfolio || "",
       location: parsed.location || "",
       bio: parsed.bio || "",
+      // picture: "",
     },
   });
 
@@ -79,6 +113,8 @@ const ProfileForm = ({ clerkId, user }: Props) => {
           protfolio: values.portfolioWebsite,
           location: values.location,
           bio: values.bio,
+          // picture: values.picture,
+
         },
         path: pathname,
       });
@@ -193,6 +229,38 @@ const ProfileForm = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
+        {/* <FormField
+          control={form.control}
+          name="picture"
+          render={({ field }) => (
+            <FormItem className="space-y-3.5">
+              <FormLabel className="text-dark400_light700 paragraph-semibold">
+                Picture
+              </FormLabel>
+              <FormControl>
+              <input  
+              // id="picture" 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageChange}
+              // type="file"
+              // onChange={(e) => addImageFromDevice(e)}
+              className="light-border-2 paragraph-regular no-focus background-light700_dark300 text-dark300_light700 min-h-[56px] border"
+
+                 />
+              
+              </FormControl>
+
+              {previewImage && (
+        <div>
+          <img src={previewImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+        </div>
+      )}
+              
+              <FormMessage className="text-rose-600" />
+            </FormItem>
+          )}
+        /> */}
         <div className="mt-7 flex  justify-end">
           <Button
             className="primary-gradient w-fit !text-light-900"
@@ -208,3 +276,7 @@ const ProfileForm = ({ clerkId, user }: Props) => {
 };
 
 export default ProfileForm;
+
+
+
+// https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yYVV1YWw2YVRiSE1rQnJZcVV0Z1phY09JYjkifQ

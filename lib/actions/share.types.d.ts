@@ -117,6 +117,10 @@ export interface UpdateUserParams {
   updateData: Partial<IUser>;
   path: string;
 }
+export interface UpdateUserProfileParams {
+  clerkId: string;
+  userPicture: string;
+}
 export interface ToggleSaveQuestionParams {
   userId: string;
   questionId: string;
