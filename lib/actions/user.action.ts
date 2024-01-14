@@ -101,21 +101,6 @@ export async function createUser(userData: CreateUserParams) {
   }
 }
 
-export async function updateUserProfile(params: UpdateUserProfileParams) {
-  try {
-    connectToDatabase();
-    const { clerkId, userPicture } = params;
-
-    await User.findOneAndUpdate(
-      { clerkId },
-      { picture: userPicture },
-      {
-        new: true,
-      }
-    );
-  } catch (error) {}
-}
-
 export async function updateUser(params: UpdateUserParams) {
   try {
     connectToDatabase();
@@ -407,3 +392,19 @@ export async function getUserAnswers(params: GetUserStatsParams) {
   }
 }
 
+// export async function updateUserProfile(params: UpdateUserProfileParams) {
+//   try {
+//     connectToDatabase();
+//     const { clerkId, userPicture } = params;
+
+//     await User.findOneAndUpdate(
+//       { clerkId },
+//       { picture: userPicture },
+//       {
+//         new: true,
+//       }
+//     );
+//   } catch (error: any) {
+//     console.log(error);
+//   }
+// }

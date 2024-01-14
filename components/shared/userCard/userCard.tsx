@@ -52,7 +52,9 @@ const UserCard = async ({ user }: Props) => {
                 }
               </div>
             ) : (
-              <Badge>No tags Yet</Badge>
+              <Badge className="body-regular text-dark100_light900">
+                No tags Yet 🙄
+              </Badge>
             )
           }
         </div>

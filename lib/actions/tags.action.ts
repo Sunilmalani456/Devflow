@@ -65,55 +65,35 @@ export async function getAllTag(params: GetAllTagsParams) {
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
     connectToDatabase();
-    const { userId } = params;
-    const user = await User.findById(userId);
-    if (!user) {
-      throw new Error("User not found");
-    }
 
-    // Find top interactions from user and group by tags
-    // Interactions...
-    return [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
-      { _id: "3", name: "tag3" },
-    ];
+    const { userId, limit = 3 } = params;
+
+    const user = await User.findById(userId);
+
+    if (!user) throw new Error("User not found");
+
+    // find interactions for the user and groups by tags
+
+    const interactions = await Question.aggregate([
+      { $match: { author: userId } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: limit },
+    ]);
+    // [{_id: "1", count: 2}, {_id: "2", count: 1}] // tags with count of interactions for the user in descending order of count // limit 3 tags with most interactions for the user // 2 interactions for tag 1, 1 interaction for tag 2
+
+    // find the tags from the interactions
+    const tags = await Tag.find({
+      _id: { $in: interactions.map((i) => i._id) },
+    });
+
+    return tags;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
-
-// ------------------ Original code ------------------
-// export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
-//   try {
-//     connectToDatabase();
-
-//     const { userId, limit = 3 } = params;
-
-//     const user = await User.findById(userId);
-
-//     if (!user) throw new Error("User not found");
-
-//     // find interactions for the user and groups by tags
-//     const interactions = await Question.aggregate([
-//       { $match: { author: userId } },
-//       { $unwind: "$tags" },
-//       { $group: { _id: "$tags", count: { $sum: 1 } } },
-//       { $sort: { count: -1 } },
-//       { $limit: limit },
-//     ]);
-
-//     // find the tags from the interactions
-//     const tags = await Tag.find({
-//       _id: { $in: interactions.map((i) => i._id) },
-//     });
-
-//     return tags;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
   try {

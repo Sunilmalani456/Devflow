@@ -11,7 +11,7 @@ import Stats from "@/components/shared/Stats";
 import AnswerTab from "@/components/shared/AnswerTab";
 import QuestionTab from "@/components/shared/QuestionTab";
 import type { Metadata } from "next";
-import ProfileImg from "@/components/shared/ProfileImg";
+import Image from "next/image";
 
 export async function generateMetadata({
   params,
@@ -31,8 +31,13 @@ const Page = async ({ params, searchParams }: URLProps) => {
     <>
       <div className="flex flex-col-reverse items-start justify-between sm:flex-row">
         <div className="flex flex-col items-start gap-4 lg:flex-row">
-          <ProfileImg img={userInfo?.user.picture} user={params.id} />
-
+          <Image
+            src={userInfo?.user.picture}
+            alt="Profile Picture"
+            width={140}
+            height={140}
+            className="h-[140px] w-[140px] rounded-full border-[3px] border-primary-500 object-cover"
+          />
           <div className="mt-3">
             <h2 className="h2-bold text-dark100_light900 mb-1">
               {userInfo?.user.name}
