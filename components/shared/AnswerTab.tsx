@@ -9,12 +9,21 @@ interface Props extends SearchParamsProps {
   clerkId?: string;
 }
 
+// 65a2ca2bd9db99a735745dc6 
+
+// 65a2ca683889efc753fae41c
 const AnswerTab = async ({ searchParams, userId, clerkId }: Props) => {
   const result = await getUserAnswers({
     // @ts-ignore
     userId,
     page: searchParams.page ? +searchParams.page : 1,
   });
+
+  // const AnswerTages = result?.answers.map((item: any) => item.question);
+  // const id = AnswerTages.map((item: any) => item._id);
+  // @ts-ignore
+  // console.log("id", id);
+  // console.log("result?.answers", result?.answers);
   return (
     <>
       {result?.answers.map((answer: any) => (

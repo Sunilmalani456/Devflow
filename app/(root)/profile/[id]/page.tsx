@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Button } from "@/components/ui/button";
 import { getUserById, getUserInfo } from "@/lib/actions/user.action";
@@ -12,6 +13,8 @@ import AnswerTab from "@/components/shared/AnswerTab";
 import QuestionTab from "@/components/shared/QuestionTab";
 import type { Metadata } from "next";
 import Image from "next/image";
+import RenderTag from "@/components/shared/RenderTag";
+import { getAllTopTags } from "@/lib/actions/tags.action";
 
 export async function generateMetadata({
   params,
@@ -24,8 +27,10 @@ export async function generateMetadata({
 }
 
 const Page = async ({ params, searchParams }: URLProps) => {
+  console.log("params", params);
   const { userId: clerkId } = auth();
   const userInfo = await getUserInfo({ userId: params.id });
+  const Top_TAGS = await getAllTopTags({ userId: userInfo?.user._id });
 
   return (
     <>
@@ -134,6 +139,30 @@ const Page = async ({ params, searchParams }: URLProps) => {
             />
           </TabsContent>
         </Tabs>
+        <div className="flex min-w-[278px] flex-col max-lg:hidden">
+          <h3 className="h3-bold text-dark200_light900">Top Tags</h3>
+          <div className="mt-7 flex flex-col">
+            {
+              // @ts-ignore
+              Top_TAGS?.length > 0 ? (
+                // @ts-ignore
+                Top_TAGS.map((tag: any) => (
+                  <RenderTag
+                    key={tag._id}
+                    _id={tag._id}
+                    name={tag.name}
+                    showCount={true}
+                    totalCount={tag.questions.length.toString()}
+                  />
+                ))
+              ) : (
+                <p className="paragraph-regular text-dark400_light800">
+                  No tags Yet 🙄
+                </p>
+              )
+            }
+          </div>
+        </div>
       </div>
     </>
   );

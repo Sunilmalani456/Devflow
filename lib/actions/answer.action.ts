@@ -7,6 +7,7 @@ import {
   AnswerVoteParams,
   CreateAnswerParams,
   DeleteAnswerParams,
+  GetAnswerByIdParams,
   GetAnswersParams,
 } from "./share.types";
 import Question from "@/database/question.model";
@@ -215,23 +216,23 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
 
 // ------------------ get answer by id ------------------
 
-// export async function getAnswerById(params: GetAnswerByIdParams) {
-//   try {
-//     connectToDatabase();
+export async function getAnswerById(params: GetAnswerByIdParams) {
+  try {
+    connectToDatabase();
 
-//     const { answerId } = params;
+    const { answerId } = params;
 
-//     const answer = await Answer.findById(answerId).populate(
-//       "author",
-//       "_id clerkId name picture"
-//     );
+    const answer = await Answer.findById(answerId).populate(
+      "author",
+      "_id clerkId name picture"
+    );
 
-//     return answer;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+    return answer;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 // ------------------ edit answer ------------------ 
 

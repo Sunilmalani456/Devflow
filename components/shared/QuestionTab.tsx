@@ -14,6 +14,23 @@ const QuestionTab = async ({ searchParams, userId, clerkId }: Props) => {
     userId,
     page: searchParams.page ? +searchParams.page : 1,
   });
+
+  // const tages = result?.questions.flat().map((item: any) => item._id);
+
+  // id [
+  //   new ObjectId('65a2ca2bd9db99a735745dc6'),
+  //   new ObjectId('6596e4c9c824424c4c3607d2'),
+  //   new ObjectId('65a3ad8e7ecc0881f0e4e293'),
+  //   new ObjectId('65b14553fbb56201a2c7dce9')
+  // ]
+  // result?.questions [
+  //   new ObjectId('65a3ae9002bae3515e55c6b2'),
+  //   new ObjectId('65a2ca2bd9db99a735745dc6'),
+  //   new ObjectId('6596e4c9c824424c4c3607d2')
+  // ]
+
+  // @ts-ignore
+  // console.log("result?.questions", tages);
   return (
     <>
       {result?.questions.map((item: any) => (

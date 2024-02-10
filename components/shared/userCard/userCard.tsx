@@ -16,6 +16,8 @@ interface Props {
 }
 // @ts-ignore
 const UserCard = async ({ user }: Props) => {
+  // @ts-ignore
+  
   const InteractedTags = await getTopInteractedTags({ userId: user._id });
   return (
     <Link
@@ -47,7 +49,15 @@ const UserCard = async ({ user }: Props) => {
                 {
                   // @ts-ignore
                   InteractedTags.map((tag: any) => (
-                    <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
+                    <RenderTag
+                      key={tag._id}
+                      _id={tag._id}
+                      name={
+                        tag?.name && tag?.name.length <= 6
+                          ? tag?.name
+                          : tag?.name.slice(0, 4) + ".."
+                      }
+                    />
                   ))
                 }
               </div>

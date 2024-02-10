@@ -12,6 +12,8 @@ import User from "@/database/user.model";
 import Tag, { ITag } from "@/database/tag.model";
 import { FilterQuery } from "mongoose";
 import Question from "@/database/question.model";
+import Answer from "@/database/answer.model";
+import console from "console";
 
 export async function getAllTag(params: GetAllTagsParams) {
   try {
@@ -162,6 +164,53 @@ export async function getTagById(params: GetTagByIdParams) {
     });
 
     return tag;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getAllTopTags(params: GetTopInteractedTagsParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+    console.log("userId", userId);
+
+    const user = await User.findById(userId);
+
+    if (!user) throw new Error("User not found");
+    // Find all answers by the specified author
+    const answers = await Answer.find({ author: userId });
+
+    // Extract question IDs from the answers
+    const questionIds = answers.map((answer) => answer.question);
+
+    // Find all questions by the specified author
+    const questions = await Question.find({ author: userId });
+
+    // Extract question IDs from the questions
+    const authorQuestionIds = questions.map((question) => question._id);
+
+    // Combine both sets of question IDs
+    const allQuestionIds = [...questionIds, ...authorQuestionIds];
+
+    // Find all tags with the combined question IDs
+    const tags = await Tag.aggregate([
+      {
+        $match: {
+          questions: { $in: allQuestionIds },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          questions: 1,
+        },
+      },
+    ]);
+    console.log("tags", tags);
+    return tags;
   } catch (error) {
     console.log(error);
   }

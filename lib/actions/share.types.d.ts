@@ -4,6 +4,12 @@
 import { IUser } from "@/database/user.model";
 import { Schema } from "mongoose";
 
+interface AnswerId {
+  answerId: string;
+}
+
+export interface GetAnswerByIdParams extends AnswerId {}
+
 export interface CreateAnswerParams {
   content: string;
   author: string; // User ID
@@ -169,9 +175,7 @@ export interface GetTagByIdParams {
 //   questionId: string;
 // }
 
-// interface AnswerId {
-//   answerId: string;
-// }
+
 
 // interface OptionalPage {
 //   page?: number;
@@ -288,7 +292,7 @@ export interface GetTagByIdParams {
 //   sortBy?: string;
 // }
 
-// export interface GetAnswerByIdParams extends AnswerId {}
+
 
 // export interface AnswerVoteParams extends AnswerId, UserId, Path, Voting {}
 
