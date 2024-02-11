@@ -395,4 +395,4 @@ JSMastery. (2023). [Ultimate Next.js 14 Course | Become a top 1% Next.js 14 deve
 
 ## 📋 License
 
-**DevOverflow** is open source software [licensed as MIT](https://opensource.org/license/mit/) and is free to use — See [LICENSE]([https://github.com/Sunilmalani456/Devflow/blob/043_Ai_Answer/LICENSE]) for more details.
+**DevOverflow** is open source software [licensed as MIT](https://opensource.org/license/mit/) and is free to use — See [LICENSE](https://github.com/Sunilmalani456/Devflow/blob/043_Ai_Answer/LICENSE) for more details.
