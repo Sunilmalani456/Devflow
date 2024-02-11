@@ -18,7 +18,6 @@ export const metadata: Metadata = {
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();
-  console.log({ userId });
 
   if (!userId) return null;
 

@@ -27,7 +27,6 @@ export async function generateMetadata({
 }
 
 const Page = async ({ params, searchParams }: URLProps) => {
-  console.log("params", params);
   const { userId: clerkId } = auth();
   const userInfo = await getUserInfo({ userId: params.id });
   const Top_TAGS = await getAllTopTags({ userId: userInfo?.user._id });
