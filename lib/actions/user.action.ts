@@ -89,6 +89,21 @@ export async function getUserById(params: GetUserByIdParams) {
   }
 }
 
+export async function getUserByIdForProfile(params: GetUserByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+    const user = await User.findOne({ _id: userId });
+
+    return user.clerkId;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+
 export async function createUser(userData: CreateUserParams) {
   try {
     connectToDatabase();
