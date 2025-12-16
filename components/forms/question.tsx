@@ -1,8 +1,7 @@
-
 "use client";
 
-import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef, useState } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 
 import {
   Form,
@@ -13,28 +12,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-
-import { useTheme } from "@/context/ThemeProvider";
-import { questionsSchema } from "@/lib/validation";
-
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { questionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
-
-
+import Image from "next/image";
 import { createQuestion, editQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
 interface Props {
   mongoUserId: string;
   type?: string;
   questionDetails?: string;
 }
-
+//
 const Question = ({ mongoUserId, type, questionDetails }: Props) => {
   //
   // ---HOOKS---
@@ -209,8 +204,6 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                     skin: mode === "dark" ? "oxide-dark" : "oxide",
                     content_css: mode === "dark" ? "dark" : "light",
                     content_style: "body { font-family:Inter; font-size:16px }",
-                    skin: mode === "dark" ? "oxide-dark" : "oxide",
-                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
