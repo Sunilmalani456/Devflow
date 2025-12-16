@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Editor } from "@tinymce/tinymce-react";
@@ -13,41 +14,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
 import { Button } from "../ui/button";
 
 import { useTheme } from "@/context/ThemeProvider";
-import { createQuestion } from "@/lib/actions/question.action";
 import { questionsSchema } from "@/lib/validation";
-=======
->>>>>>> b4deca00a1c4cc6f2a6bcb30d9e5ac71f4dd1195
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Badge } from "../ui/badge";
-<<<<<<< HEAD
-=======
-import Image from "next/image";
+
+
 import { createQuestion, editQuestion } from "@/lib/actions/question.action";
-import { usePathname, useRouter } from "next/navigation";
-import { useTheme } from "@/context/ThemeProvider";
->>>>>>> b4deca00a1c4cc6f2a6bcb30d9e5ac71f4dd1195
 
 interface Props {
   mongoUserId: string;
   type?: string;
   questionDetails?: string;
 }
-//
-<<<<<<< HEAD
-// ---COMPONENT---
 
-const Question = ({ mongoUserId }: Props) => {
-=======
 const Question = ({ mongoUserId, type, questionDetails }: Props) => {
->>>>>>> b4deca00a1c4cc6f2a6bcb30d9e5ac71f4dd1195
   //
   // ---HOOKS---
   const { mode } = useTheme();
@@ -57,8 +45,6 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
   // const type: any = "create";
   const [IsSubmitting, setIsSubmitting] = useState(false);
 
-<<<<<<< HEAD
-=======
   const parseQuestionDetails =
     questionDetails && JSON.parse(questionDetails || "");
   const groupedTags = parseQuestionDetails?.tags?.map((tag: any) => tag.name);
@@ -107,7 +93,6 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
       setIsSubmitting(false);
     }
   }
->>>>>>> b4deca00a1c4cc6f2a6bcb30d9e5ac71f4dd1195
 
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
